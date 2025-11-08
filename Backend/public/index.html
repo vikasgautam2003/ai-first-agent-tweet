@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCP Chat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 flex flex-col h-screen">
+  <header class="p-4 bg-gray-800 text-lg font-semibold text-center border-b border-gray-700">
+    🛰️ MCP Chat Assistant
+  </header>
+
+  <main id="chatBox" class="flex-1 overflow-y-auto p-4 space-y-4">
+    <div class="text-center text-gray-400">Start chatting with your agent 👇</div>
+  </main>
+
+  <form id="chatForm" class="p-4 bg-gray-800 flex gap-2 border-t border-gray-700">
+    <input
+      id="chatInput"
+      type="text"
+      placeholder="Type your message..."
+      class="flex-1 p-2 rounded bg-gray-700 text-gray-100 focus:outline-none"
+      required
+    />
+    <button
+      class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-500 transition"
+      type="submit"
+    >
+      Send
+    </button>
+  </form>
+
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+
+    function appendMessage(sender, text) {
+      const msg = document.createElement('div');
+      msg.className = sender === 'You' 
+        ? 'text-right'
+        : 'text-left';
+      msg.innerHTML = `
+        <div class="inline-block px-3 py-2 rounded-lg ${
+          sender === 'You'
+            ? 'bg-blue-600 text-white'
+            : 'bg-gray-700 text-gray-100'
+        } max-w-lg">
+          <strong>${sender}:</strong> ${text}
+        </div>`;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const userMessage = chatInput.value.trim();
+      if (!userMessage) return;
+      appendMessage('You', userMessage);
+      chatInput.value = '';
+
+
+      appendMessage('🧠 Gemini', 'Thinking...');
+      const res = await fetch('http://127.0.0.1:3000/mcp/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
+      });
+
+      const data = await res.json();
+    
+      chatBox.lastChild.remove();
+      appendMessage('🤖 MCP', data.reply || 'No response');
+    });
+  </script>
+</body>
+</html>
