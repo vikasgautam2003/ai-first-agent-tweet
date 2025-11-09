@@ -562,11 +562,41 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { TwitterApi } from 'twitter-api-v2';
+import cors from 'cors';
 
 dotenv.config({ path: path.resolve('../.env') });
 
 const app = express();
 app.use(express.json());
+
+
+
+// ------------------------------
+// 🔓 CORS Configuration
+// ------------------------------
+const allowedOrigins = [
+  "https://ai-first-agent-tweet.vercel.app",  
+  "http://localhost:3000"             
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+ 
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+  })
+);
+
+
+
 
 // ------------------------------
 // 🔑 Environment & Clients Setup
@@ -577,6 +607,11 @@ console.log('🔍 Loaded Twitter ENV:', {
   X_ACCESS_TOKEN: !!process.env.X_ACCESS_TOKEN,
   X_ACCESS_SECRET: !!process.env.X_ACCESS_SECRET
 });
+
+
+
+
+
 
 // Ensure all required credentials exist
 if (
