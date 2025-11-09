@@ -245,7 +245,7 @@ export default function Page() {
             animate={{ opacity: 1, y: 0 }}
             className="text-lg font-semibold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"
           >
-            GEMINI MCP AGENT
+            NeuraPost
           </motion.h1>
           <p className="text-xs text-gray-400 tracking-widest">AUTONOMOUS INTELLIGENCE</p>
         </header>

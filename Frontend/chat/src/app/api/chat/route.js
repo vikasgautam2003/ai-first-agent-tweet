@@ -144,7 +144,7 @@ Shorten this tweet to under 280 characters while preserving tone and meaning:
         },
       };
 
-      const response = await fetch("http://localhost:5000/mcp", {
+      const response = await fetch("https://ai-first-agent-tweet.onrender.com/mcp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
