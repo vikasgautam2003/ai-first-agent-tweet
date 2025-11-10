@@ -10,7 +10,7 @@ An AI-powered, multi-platform content automation system that autonomously create
 
 ---
 
-### ▶️ [Live Demo](https://neura-post.vercel.app/)
+### ▶️ [Live Demo](https://ai-first-agent-tweet.vercel.app/)
 
 ---
 
@@ -22,7 +22,7 @@ It’s designed for creators, businesses, and developers who want to automate th
 The architecture combines a **Next.js frontend** with a **Node.js MCP backend** hosted separately for modularity and scalability.  
 NeuraPost integrates APIs for **X (Twitter)**, **LinkedIn**, and **Instagram**, using dynamic tool invocation and real-time response handling for flawless automation.
 
-![Project Screenshot](/public/neura-ui.png)
+![Project Screenshot](Frontend/chat/public/chat.png)
 
 ---
 
